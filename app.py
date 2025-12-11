@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import psycopg2
+import psycopg2.extras
 from psycopg2 import Error
 import os
 
