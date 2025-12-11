@@ -9,10 +9,10 @@ app.secret_key = os.environ.get('SECRET_KEY', 'clave-secreta-desarrollo')
 
 # Configuración de la base de datos
 DB_CONFIG = {
-    'host': 'dpg-d4tivjumcj7s739sd17g-a.oregon-postgres.render.com',
+    'host': 'dpg-d4ta7j56ubrc73ehbn4g-a.frankfurt-postgres.render.com',
     'user': 'xavi',
-    'password': 'cqDCWqrQdxCD7JZGt2KH64V4VqvGWtR0',
-    'database': 'tareas_nucz',
+    'password': 'RO2D74OsWx2ulRGM81YZ0dvS3X0lnevP',
+    'database': 'tareas_nut8',
     'port': 5432 
 }
 
@@ -30,7 +30,7 @@ def init_db():
         cursor = connection.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS tareas (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id SERIAL PRIMARY KEY,
                 name VARCHAR(200) NOT NULL
             )
         ''')
@@ -43,7 +43,7 @@ def index():
     connection = get_db_connection()
     tareas = []
     if connection:
-        cursor = connection.cursor(dictionary=True)
+        cursor = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cursor.execute('SELECT * FROM tareas ORDER BY id DESC')
         tareas = cursor.fetchall()
         cursor.close()
@@ -69,6 +69,7 @@ def agregar():
 @app.route('/modificar/<int:id>', methods=['GET', 'POST'])
 def modificar(id):
     connection = get_db_connection()
+    
     if request.method == 'POST':
         name = request.form.get('name')
         if name and connection:
@@ -79,10 +80,10 @@ def modificar(id):
             connection.close()
             flash('Tarea modificada correctamente', 'success')
             return redirect(url_for('index'))
-    
+
     tarea = None
     if connection:
-        cursor = connection.cursor(dictionary=True)
+        cursor = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cursor.execute('SELECT * FROM tareas WHERE id = %s', (id,))
         tarea = cursor.fetchone()
         cursor.close()
