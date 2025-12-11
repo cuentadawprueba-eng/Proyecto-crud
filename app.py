@@ -8,10 +8,10 @@ app.secret_key = os.environ.get('SECRET_KEY', 'clave-secreta-desarrollo')
 
 # Configuración de la base de datos
 DB_CONFIG = {
-    'host': 'dpg-d4ta7j56ubrc73ehbn4g-a.frankfurt-postgres.render.com',
+    'host': 'dpg-d4tivjumcj7s739sd17g-a.oregon-postgres.render.com',
     'user': 'xavi',
-    'password': 'RO2D74OsWx2ulRGM81YZ0dvS3X0lnevP',
-    'database': 'tareas_nut8',
+    'password': 'cqDCWqrQdxCD7JZGt2KH64V4VqvGWtR0',
+    'database': 'tareas_nucz',
     'port': 5432 
 }
 
